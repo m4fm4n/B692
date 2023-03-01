@@ -1,0 +1,6 @@
+---
+# handlers file for dnsmaskq
+- name: restart_dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted

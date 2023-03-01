@@ -1,0 +1,28 @@
+---
+# tasks file for dnsmaskq
+- name: apt update
+  apt:
+    update_cache: yes
+
+- name: Install dnsmasq
+  apt:
+    name: dnsmasq
+    state: latest
+
+- name: remove /etc/dnsmasq.conf
+  file:
+    path: /etc/dnsmasq.conf
+    state: absent
+
+- name: add /etc/dnsmasq.conf
+  copy:
+    src: /etc/ansible/roles/dnsmaskq/files/dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    remote_src: yes
+
+- name: Enable service
+  service:
+    name: dnsmasq
+    enabled: yes
+    state: started
+  notify: restart_dnsmasq

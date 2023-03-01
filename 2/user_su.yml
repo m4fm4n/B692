@@ -1,0 +1,30 @@
+---
+- hosts: test
+  become: true
+  gather_facts: yes
+  tasks:
+
+    - name: Create group
+      group:
+        name: superusers
+        state: present
+
+    - name: Allow group to have sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%superusers'
+        line: '%superusers ALL=(ALL)  ALL'
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: Add sudoers users to group
+      user:
+        name: user2
+        group: superusers
+        state: present
+
+    - name: Add sudoers users to group
+      user:
+        name: user3
+        group: superusers
+        state: present

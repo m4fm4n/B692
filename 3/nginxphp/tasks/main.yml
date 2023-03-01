@@ -1,0 +1,51 @@
+---
+# tasks file for nginxphp
+- name: apt update
+  apt:
+    update_cache: yes
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: latest
+
+- name: Install php-fpm
+  apt:
+    name: php8.1-fpm
+
+- name: Remove /etc/nginx/sites-enabled/default
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Add new /etc/nginx/sites-enabled/default
+  copy:
+    src: /etc/ansible/roles/nginxphp/files/default
+    dest: /etc/nginx/sites-enabled/default
+    remote_src: yes
+
+- name: Remove /usr/share/nginx/html/index.php
+  file:
+    path: /usr/share/nginx/html/index.php
+    state: absent
+  ignore_errors: true
+
+- name: Add new /usr/share/nginx/html/index.php
+  copy:
+    src: /etc/ansible/roles/nginxphp/files/index.php
+    dest: /usr/share/nginx/html/index.php
+    remote_src: yes
+
+- name: Enable service nginx
+  service:
+    name: nginx
+    enabled: yes
+    state: started
+  notify: restart_nginx
+
+- name: Enable service php8.1-fpm
+  service:
+    name: php8.1-fpm
+    enabled: yes
+    state: started
+  notify: restart_php
