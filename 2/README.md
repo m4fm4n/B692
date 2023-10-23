@@ -1,5 +1,4 @@
 ---
-
 Playbook для:
 1. Создание группы superusers
 2. Добавление этой группы в sudo
@@ -10,4 +9,4 @@ Playbook для:
 ---
 
 Запуск осуществляется:
-``` ansible-playbook -i ./hosts ./user_su.yml -K```
+```ansible-playbook -i ./hosts ./user_su.yml -K```
