@@ -8,4 +8,4 @@ Playbook для:
 
 
 Запуск осуществляется:
-```ansible-playbook -i ./hosts ./user_su.yml -K```
+```ansible-playbook ./user_su.yml -i ./hosts  -K```
